@@ -6,99 +6,91 @@
     <title>Arepas La Troncal - Pedidos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #fdf8f1; }
-        .brand-color { background-color: #5c3a21; } /* Marrón del logo */
+        body { background-color: #fdf8f1; font-family: sans-serif; }
+        .brand-color { background-color: #5c3a21; }
         .accent-color { color: #5c3a21; }
-        .card { border-radius: 15px; }
+        .card { border-radius: 15px; transition: transform 0.2s; }
+        .card:active { transform: scale(0.98); }
     </style>
 </head>
 <body class="pb-10">
 
-    <header class="brand-color text-white p-6 text-center shadow-lg">
-        <h1 class="text-2xl font-bold uppercase tracking-widest">Arepas La Troncal</h1>
-        <p class="text-sm opacity-80">Calidad y Sabor Tradicional</p>
+    <header class="brand-color text-white p-4 shadow-lg flex flex-col items-center">
+        <img src="arepas-la-troncal.jpg" alt="Logo Arepas La Troncal" class="w-32 h-32 rounded-full border-4 border-amber-400 mb-2 shadow-md">
+        <h1 class="text-xl font-bold uppercase tracking-widest">Arepas La Troncal</h1>
     </header>
 
     <main class="max-w-md mx-auto mt-6 px-4">
         
         <section id="productos" class="space-y-4">
-            <h2 class="text-xl font-bold accent-color border-b-2 border-amber-200 pb-2">Nuestros Productos</h2>
+            <h2 class="text-lg font-bold accent-color border-b-2 border-amber-200 pb-1">Haz tu pedido aquí</h2>
             
             <div class="bg-white p-4 shadow-md card flex justify-between items-center border border-amber-100">
-                <div>
+                <div class="flex-1">
                     <h3 class="font-bold text-gray-800">Arepa de Queso</h3>
-                    <p class="text-xs text-gray-500">Unidad de medida: Paquete x5</p>
-                    <p class="text-sm font-semibold accent-color">$<span class="precio">12000</span></p>
+                    <p class="text-xs text-gray-500 italic">Paquete x 5 unidades</p>
+                    <p class="text-sm font-semibold accent-color mt-1">$<span class="precio">12000</span></p>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <button onclick="cambiarCantidad(this, -1)" class="bg-gray-200 px-3 py-1 rounded-full font-bold">-</button>
-                    <span class="cantidad font-bold text-lg">0</span>
-                    <button onclick="cambiarCantidad(this, 1)" class="brand-color text-white px-3 py-1 rounded-full font-bold">+</button>
+                <div class="flex items-center space-x-3 bg-gray-50 p-2 rounded-lg">
+                    <button onclick="cambiarCantidad(this, -1)" class="bg-gray-300 text-gray-700 w-8 h-8 rounded-full font-bold text-xl">-</button>
+                    <span class="cantidad font-bold text-lg w-6 text-center">0</span>
+                    <button onclick="cambiarCantidad(this, 1)" class="brand-color text-white w-8 h-8 rounded-full font-bold text-xl">+</button>
                 </div>
             </div>
 
             <div class="bg-white p-4 shadow-md card flex justify-between items-center border border-amber-100">
-                <div>
-                    <h3 class="font-bold text-gray-800">Arepa de Maíz Blanco</h3>
-                    <p class="text-xs text-gray-500">Unidad de medida: Paquete x10</p>
-                    <p class="text-sm font-semibold accent-color">$<span class="precio">8000</span></p>
+                <div class="flex-1">
+                    <h3 class="font-bold text-gray-800">Arepa de Maíz</h3>
+                    <p class="text-xs text-gray-500 italic">Paquete x 10 unidades</p>
+                    <p class="text-sm font-semibold accent-color mt-1">$<span class="precio">8000</span></p>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <button onclick="cambiarCantidad(this, -1)" class="bg-gray-200 px-3 py-1 rounded-full font-bold">-</button>
-                    <span class="cantidad font-bold text-lg">0</span>
-                    <button onclick="cambiarCantidad(this, 1)" class="brand-color text-white px-3 py-1 rounded-full font-bold">+</button>
+                <div class="flex items-center space-x-3 bg-gray-50 p-2 rounded-lg">
+                    <button onclick="cambiarCantidad(this, -1)" class="bg-gray-300 text-gray-700 w-8 h-8 rounded-full font-bold text-xl">-</button>
+                    <span class="cantidad font-bold text-lg w-6 text-center">0</span>
+                    <button onclick="cambiarCantidad(this, 1)" class="brand-color text-white w-8 h-8 rounded-full font-bold text-xl">+</button>
                 </div>
             </div>
         </section>
 
-        <div class="mt-8 bg-amber-100 p-4 rounded-xl border-2 border-amber-300 text-center">
-            <p class="text-lg font-bold accent-color">TOTAL A PEDIR: $<span id="total-general">0</span></p>
+        <div class="mt-6 bg-amber-50 p-4 rounded-xl border border-amber-200 text-right">
+            <p class="text-md font-medium text-gray-600">Subtotal: $<span id="subtotal">0</span></p>
+            <p class="text-xl font-bold accent-color">TOTAL: $<span id="total-general">0</span></p>
         </div>
 
-        <section class="mt-8 space-y-4">
-            <h2 class="text-xl font-bold accent-color border-b-2 border-amber-200 pb-2">Datos de Entrega</h2>
-            <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
-            <input type="text" id="direccion" placeholder="Dirección exacta" class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
-            <input type="tel" id="telefono" placeholder="Celular" class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+        <section class="mt-8 space-y-3">
+            <h2 class="text-lg font-bold accent-color border-b-2 border-amber-200 pb-1">Datos de Envío</h2>
+            <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none">
+            <input type="text" id="direccion" placeholder="Dirección de entrega" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none">
+            <input type="tel" id="telefono" placeholder="Número de Celular" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none">
             
-            <select id="pago" class="w-full p-3 border rounded-lg shadow-sm bg-white">
-                <option value="">Forma de pago...</option>
-                <option value="Efectivo">Efectivo</option>
-                <option value="Nequi">Nequi</option>
-                <option value="Daviplata">Daviplata</option>
-                <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+            <select id="pago" class="w-full p-3 border rounded-lg bg-white outline-none">
+                <option value="Efectivo">Pagar con Efectivo</option>
+                <option value="Nequi/Daviplata">Transferencia (Nequi/Daviplata)</option>
             </select>
 
-            <textarea id="observaciones" placeholder="Observaciones (Ej: portería, sin sal...)" class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+            <textarea id="observaciones" rows="2" placeholder="Observaciones adicionales..." class="w-full p-3 border rounded-lg outline-none"></textarea>
         </section>
 
-        <button onclick="enviarPedido()" class="mt-6 w-full bg-green-600 text-white font-bold py-4 rounded-xl shadow-xl hover:bg-green-700 transition-all flex justify-center items-center">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-6 h-6 mr-2" alt="WA">
-            ENVIAR PEDIDO POR WHATSAPP
+        <button onclick="enviarPedido()" class="mt-6 w-full bg-green-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-700 flex justify-center items-center text-lg">
+            Confirmar Pedido vía WhatsApp
         </button>
 
-        <footer class="mt-12 text-center text-gray-500 text-xs italic">
-            <p>App desarrollada por <strong>Vibras Positivas</strong></p>
-            <p>© Todos los derechos reservados</p>
+        <footer class="mt-10 text-center text-gray-400 text-xs">
+            <p>App desarrollada por <strong>Vibras Positivas</strong> © Derechos de autor</p>
         </footer>
 
     </main>
 
     <script>
-        // Función para sumar o restar cantidades
         function cambiarCantidad(btn, valor) {
             const contenedor = btn.parentElement;
             const spanCantidad = contenedor.querySelector('.cantidad');
             let actual = parseInt(spanCantidad.innerText);
-            
-            actual += valor;
-            if (actual < 0) actual = 0;
-            
+            actual = Math.max(0, actual + valor);
             spanCantidad.innerText = actual;
             calcularTotal();
         }
 
-        // Función para calcular el total en pantalla
         function calcularTotal() {
             let total = 0;
             document.querySelectorAll('#productos > div').forEach(producto => {
@@ -106,10 +98,10 @@
                 const cantidad = parseInt(producto.querySelector('.cantidad').innerText);
                 total += precio * cantidad;
             });
-            document.getElementById('total-general').innerText = total.toLocaleString('es-CO');
+            document.getElementById('subtotal').innerText = total.toLocaleString();
+            document.getElementById('total-general').innerText = total.toLocaleString();
         }
 
-        // Función principal de envío
         function enviarPedido() {
             const nombre = document.getElementById('nombre').value;
             const direccion = document.getElementById('direccion').value;
@@ -119,63 +111,60 @@
             const total = document.getElementById('total-general').innerText;
 
             if (!nombre || !direccion || !telefono) {
-                alert("Por favor completa los datos de entrega");
+                alert("⚠️ Por favor completa tu nombre, dirección y celular.");
                 return;
             }
 
-            let mensaje = `*PEDIDO AREPAS LA TRONCAL*%0A`;
-            mensaje += `--------------------------%0A`;
-            
-            let hayProductos = false;
+            let productosTexto = "";
             document.querySelectorAll('#productos > div').forEach(prod => {
                 const nombreP = prod.querySelector('h3').innerText;
                 const cant = prod.querySelector('.cantidad').innerText;
                 if (parseInt(cant) > 0) {
-                    mensaje += `• ${cant} x ${nombreP}%0A`;
-                    hayProductos = true;
+                    productosTexto += `- ${cant} x ${nombreP}%0A`;
                 }
             });
 
-            if (!hayProductos) {
-                alert("Agrega al menos un producto al pedido");
+            if (productosTexto === "") {
+                alert("🛒 Por favor agrega al menos un producto.");
                 return;
             }
 
-            mensaje += `--------------------------%0A`;
-            mensaje += `*TOTAL:* $${total}%0A`;
-            mensaje += `--------------------------%0A`;
-            mensaje += `*CLIENTE:* ${nombre}%0A`;
-            mensaje += `*DIR:* ${direccion}%0A`;
-            mensaje += `*TEL:* ${telefono}%0A`;
-            mensaje += `*PAGO:* ${pago}%0A`;
-            mensaje += `*OBS:* ${obs}%0A`;
+            // CONSTRUCCIÓN DEL MENSAJE INCLUYENDO CRÉDITOS
+            let mensaje = `*PEDIDO: AREPAS LA TRONCAL*%0A%0A`;
+            mensaje += `*PRODUCTOS:*%0A${productosTexto}%0A`;
+            mensaje += `*TOTAL A PAGAR:* $${total}%0A%0A`;
+            mensaje += `*DATOS DEL CLIENTE:*%0A`;
+            mensaje += `• Nombre: ${nombre}%0A`;
+            mensaje += `• Dirección: ${direccion}%0A`;
+            mensaje += `• Celular: ${telefono}%0A`;
+            mensaje += `• Pago: ${pago}%0A`;
+            mensaje += `• Obs: ${obs}%0A%0A`;
+            mensaje += `_App desarrollada por vibras positivas derecho de autor_`;
 
             const nroWhatsApp = "3122493344";
-            const url = `https://api.whatsapp.com/send?phone=${nroWhatsApp}&text=${mensaje}`;
-            
-            window.open(url, '_blank');
+            window.open(`https://api.whatsapp.com/send?phone=${nroWhatsApp}&text=${mensaje}`, '_blank');
         }
 
-        // "Control Invisible" - Guardar datos del cliente automáticamente
-        window.onload = function() {
-            if(localStorage.getItem('cliente_troncal')) {
-                const data = JSON.parse(localStorage.getItem('cliente_troncal'));
-                document.getElementById('nombre').value = data.nombre;
-                document.getElementById('direccion').value = data.direccion;
-                document.getElementById('telefono').value = data.telefono;
+        // Recuperar datos guardados (Control invisible)
+        window.onload = () => {
+            const guardado = localStorage.getItem('troncal_user');
+            if (guardado) {
+                const d = JSON.parse(guardado);
+                document.getElementById('nombre').value = d.n || "";
+                document.getElementById('direccion').value = d.d || "";
+                document.getElementById('telefono').value = d.t || "";
             }
         }
 
-        // Guardar cada vez que escriben
-        document.addEventListener('change', () => {
-            const data = {
-                nombre: document.getElementById('nombre').value,
-                direccion: document.getElementById('direccion').value,
-                telefono: document.getElementById('telefono').value
+        // Guardar datos automáticamente
+        document.addEventListener('input', () => {
+            const d = {
+                n: document.getElementById('nombre').value,
+                d: document.getElementById('direccion').value,
+                t: document.getElementById('telefono').value
             };
-            localStorage.setItem('cliente_troncal', JSON.stringify(data));
+            localStorage.setItem('troncal_user', JSON.stringify(d));
         });
-
     </script>
 </body>
 </html>
