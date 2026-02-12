@@ -1,1 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arepas La Troncal - Pedidos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #fdf8f1; }
+        .brand-color { background-color: #5c3a21; } /* Marrón del logo */
+        .accent-color { color: #5c3a21; }
+        .card { border-radius: 15px; }
+    </style>
+</head>
+<body class="pb-10">
 
+    <header class="brand-color text-white p-6 text-center shadow-lg">
+        <h1 class="text-2xl font-bold uppercase tracking-widest">Arepas La Troncal</h1>
+        <p class="text-sm opacity-80">Calidad y Sabor Tradicional</p>
+    </header>
+
+    <main class="max-w-md mx-auto mt-6 px-4">
+        
+        <section id="productos" class="space-y-4">
+            <h2 class="text-xl font-bold accent-color border-b-2 border-amber-200 pb-2">Nuestros Productos</h2>
+            
+            <div class="bg-white p-4 shadow-md card flex justify-between items-center border border-amber-100">
+                <div>
+                    <h3 class="font-bold text-gray-800">Arepa de Queso</h3>
+                    <p class="text-xs text-gray-500">Unidad de medida: Paquete x5</p>
+                    <p class="text-sm font-semibold accent-color">$<span class="precio">12000</span></p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="cambiarCantidad(this, -1)" class="bg-gray-200 px-3 py-1 rounded-full font-bold">-</button>
+                    <span class="cantidad font-bold text-lg">0</span>
+                    <button onclick="cambiarCantidad(this, 1)" class="brand-color text-white px-3 py-1 rounded-full font-bold">+</button>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 shadow-md card flex justify-between items-center border border-amber-100">
+                <div>
+                    <h3 class="font-bold text-gray-800">Arepa de Maíz Blanco</h3>
+                    <p class="text-xs text-gray-500">Unidad de medida: Paquete x10</p>
+                    <p class="text-sm font-semibold accent-color">$<span class="precio">8000</span></p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="cambiarCantidad(this, -1)" class="bg-gray-200 px-3 py-1 rounded-full font-bold">-</button>
+                    <span class="cantidad font-bold text-lg">0</span>
+                    <button onclick="cambiarCantidad(this, 1)" class="brand-color text-white px-3 py-1 rounded-full font-bold">+</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="mt-8 bg-amber-100 p-4 rounded-xl border-2 border-amber-300 text-center">
+            <p class="text-lg font-bold accent-color">TOTAL A PEDIR: $<span id="total-general">0</span></p>
+        </div>
+
+        <section class="mt-8 space-y-4">
+            <h2 class="text-xl font-bold accent-color border-b-2 border-amber-200 pb-2">Datos de Entrega</h2>
+            <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+            <input type="text" id="direccion" placeholder="Dirección exacta" class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+            <input type="tel" id="telefono" placeholder="Celular" class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+            
+            <select id="pago" class="w-full p-3 border rounded-lg shadow-sm bg-white">
+                <option value="">Forma de pago...</option>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Nequi">Nequi</option>
+                <option value="Daviplata">Daviplata</option>
+                <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+            </select>
+
+            <textarea id="observaciones" placeholder="Observaciones (Ej: portería, sin sal...)" class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+        </section>
+
+        <button onclick="enviarPedido()" class="mt-6 w-full bg-green-600 text-white font-bold py-4 rounded-xl shadow-xl hover:bg-green-700 transition-all flex justify-center items-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-6 h-6 mr-2" alt="WA">
+            ENVIAR PEDIDO POR WHATSAPP
+        </button>
+
+        <footer class="mt-12 text-center text-gray-500 text-xs italic">
+            <p>App desarrollada por <strong>Vibras Positivas</strong></p>
+            <p>© Todos los derechos reservados</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Función para sumar o restar cantidades
+        function cambiarCantidad(btn, valor) {
+            const contenedor = btn.parentElement;
+            const spanCantidad = contenedor.querySelector('.cantidad');
+            let actual = parseInt(spanCantidad.innerText);
+            
+            actual += valor;
+            if (actual < 0) actual = 0;
+            
+            spanCantidad.innerText = actual;
+            calcularTotal();
+        }
+
+        // Función para calcular el total en pantalla
+        function calcularTotal() {
+            let total = 0;
+            document.querySelectorAll('#productos > div').forEach(producto => {
+                const precio = parseInt(producto.querySelector('.precio').innerText);
+                const cantidad = parseInt(producto.querySelector('.cantidad').innerText);
+                total += precio * cantidad;
+            });
+            document.getElementById('total-general').innerText = total.toLocaleString('es-CO');
+        }
+
+        // Función principal de envío
+        function enviarPedido() {
+            const nombre = document.getElementById('nombre').value;
+            const direccion = document.getElementById('direccion').value;
+            const telefono = document.getElementById('telefono').value;
+            const pago = document.getElementById('pago').value;
+            const obs = document.getElementById('observaciones').value;
+            const total = document.getElementById('total-general').innerText;
+
+            if (!nombre || !direccion || !telefono) {
+                alert("Por favor completa los datos de entrega");
+                return;
+            }
+
+            let mensaje = `*PEDIDO AREPAS LA TRONCAL*%0A`;
+            mensaje += `--------------------------%0A`;
+            
+            let hayProductos = false;
+            document.querySelectorAll('#productos > div').forEach(prod => {
+                const nombreP = prod.querySelector('h3').innerText;
+                const cant = prod.querySelector('.cantidad').innerText;
+                if (parseInt(cant) > 0) {
+                    mensaje += `• ${cant} x ${nombreP}%0A`;
+                    hayProductos = true;
+                }
+            });
+
+            if (!hayProductos) {
+                alert("Agrega al menos un producto al pedido");
+                return;
+            }
+
+            mensaje += `--------------------------%0A`;
+            mensaje += `*TOTAL:* $${total}%0A`;
+            mensaje += `--------------------------%0A`;
+            mensaje += `*CLIENTE:* ${nombre}%0A`;
+            mensaje += `*DIR:* ${direccion}%0A`;
+            mensaje += `*TEL:* ${telefono}%0A`;
+            mensaje += `*PAGO:* ${pago}%0A`;
+            mensaje += `*OBS:* ${obs}%0A`;
+
+            const nroWhatsApp = "3122493344";
+            const url = `https://api.whatsapp.com/send?phone=${nroWhatsApp}&text=${mensaje}`;
+            
+            window.open(url, '_blank');
+        }
+
+        // "Control Invisible" - Guardar datos del cliente automáticamente
+        window.onload = function() {
+            if(localStorage.getItem('cliente_troncal')) {
+                const data = JSON.parse(localStorage.getItem('cliente_troncal'));
+                document.getElementById('nombre').value = data.nombre;
+                document.getElementById('direccion').value = data.direccion;
+                document.getElementById('telefono').value = data.telefono;
+            }
+        }
+
+        // Guardar cada vez que escriben
+        document.addEventListener('change', () => {
+            const data = {
+                nombre: document.getElementById('nombre').value,
+                direccion: document.getElementById('direccion').value,
+                telefono: document.getElementById('telefono').value
+            };
+            localStorage.setItem('cliente_troncal', JSON.stringify(data));
+        });
+
+    </script>
+</body>
+</html>
